@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .slots-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .slot-card {
+            padding: 20px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .slot-card.available {
+            background-color: #27ae60; /* green for available */
+        }
+
+        .slot-card.filled {
+            background-color: #c0392b; /* red for filled */
+        }
+
+        .slot-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+
+<h1>Total Slots</h1>
+
+<div class="slots-container">
+    {% for i in slots %}
+        <div class="slot-card {% if i.is_available %}available{% else %}filled{% endif %}">
+            Slot {{ i.slot_number }} - 
+            {% if i.is_available %}
+                Available
+            {% else %}
+                Filled
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>

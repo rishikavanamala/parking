@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Slot Released</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 500px;
+            margin: auto;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .fee {
+            font-weight: bold;
+            color: #e74c3c;
+            font-size: 18px;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+            background-color: #3498db;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        .back-link:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Slot Released</h1>
+
+        <p><strong>Slot Number:</strong> {{ session.slot.slot_number }}</p>
+        <p><strong>Vehicle Number:</strong> {{ session.vehicle_number }}</p>
+        <p><strong>Vehicle Type:</strong> {{ session.vehicle_type }}</p>
+        <p><strong>Owner Name:</strong> {{ session.owner_name }}</p>
+        <p><strong>Entry Time:</strong> {{ session.entry_time|date:"d M Y H:i" }}</p>
+        <p><strong>Exit Time:</strong> {{ session.exit_time|date:"d M Y H:i" }}</p>
+        <p class="fee">Total Parking Fee: ₹{{ fee }}</p>
+
+        <a href="{% url 'avaliable_slots' %}" class="back-link">Back to Parking Slots</a>
+    </div>
+    <a href="{% url 'download_pdf' session.id %}" class="back-link" style="background-color: green;">
+    Download Receipt (PDF)
+</a>
+<div class="email-form">
+        <form action="{% url 'send_receipt_email' session.id %}" method="post">
+            {% csrf_token %}
+            <input type="email" name="email" placeholder="Enter email to send receipt" required>
+            <button type="submit">Send Email</button>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<h2>Reserve a Slot</h2>
+
+<style>
+.slot-box {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    margin: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+}
+
+.available { background-color: green; }
+.booked { background-color: red; }
+.reserved { background-color: orange; }
+
+.slot-box a { color: white; text-decoration: none; }
+</style>
+
+<div>
+    <p>abcdef_________________--</p>
+    {% for s in slots %}
+        <div class="slot-box 
+            {% if s.is_available and not s.is_reserved %}available
+            {% elif not s.is_available %}booked
+            {% elif s.is_reserved %}reserved
+            {% endif %}">
+            
+            {% if s.is_available and not s.is_reserved %}
+                <a href="{% url 'reserve_form' s.slot_number %}">
+                    {{ s.slot_number }}
+                </a>
+            {% else %}
+            
+                {{ s.slot_number }}
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>

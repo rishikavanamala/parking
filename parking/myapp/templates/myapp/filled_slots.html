@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .slots-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .slot-card {
+            background-color: #c0392b; /* red for filled */
+            color: white;
+            padding: 20px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .slot-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .empty-message {
+            text-align: center;
+            font-size: 18px;
+            color: #555;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Filled Slots</h1>
+
+{% if slots %}
+<div class="slots-container">
+    {% for i in slots %}
+        <div class="slot-card">
+            Slot {{ i.slot_number }}
+        </div>
+    {% endfor %}
+</div>
+{% else %}
+    <p class="empty-message">No filled slots.</p>
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            margin: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(10, 70px);
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .slot {
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .slot:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .available { background: #27ae60; }
+        .booked { background: #c0392b; }
+
+        /* Tooltip */
+        .tooltip {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            top: -120px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
+            background: #333;
+            color: white;
+            border-radius: 6px;
+            width: 180px;
+            font-size: 13px;
+            text-align: left;
+            transition: 0.3s;
+            z-index: 9999;
+        }
+
+        .slot:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .tooltip b {
+            display: inline-block;
+            width: 60px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Parking Slots</h2>
+
+<div class="grid">
+
+{% for slot in slots %}
+    {% if slot.is_available %}
+        <a href="{% url 'book_slot' slot.slot_number %}">
+            <div class="slot available">
+                {{ slot.slot_number }}
+            </div>
+        </a>
+    {% else %}
+        <div class="slot booked">
+            {{ slot.slot_number }}
+
+            {% with session=session_map.slot_number %}
+            <div class="tooltip">
+                <b>Vehicle:</b> {{ session.vehicle_number }} <br>
+                <b>Type:</b> {{ session.vehicle_type }} <br>
+                <b>Owner:</b> {{ session.owner_name }} <br>
+            </div>
+            {% endwith %}
+        </div>
+    {% endif %}
+{% endfor %}
+
+</div>
+
+</body>
+</html>
