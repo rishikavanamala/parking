@@ -141,6 +141,7 @@ def reserve_form(request, slot_id):
 
 
 import io
+#comment 1
 
 def download_pdf(request, id):
     session = ParkingSession.objects.get(id=id)
